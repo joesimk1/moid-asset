@@ -18,6 +18,15 @@
             <a href="{{route('institutions.index')}}"> <i class="material-icons">category</i>Institutions </a>
         </li>
         <li class="sidebar-menu-item">
+            <a href="{{route('departments.index')}}"> <i class="material-icons">house</i>Departments </a>
+        </li>
+        <li class="sidebar-menu-item">
+            <a href="{{route('assets.index')}}"> <i class="material-icons">category</i>Asset </a>
+        </li>
+        <li class="sidebar-menu-item">
+            <a href="{{route('assetcategories.index')}}"> <i class="material-icons">category</i>Asset category </a>
+        </li>
+        <li class="sidebar-menu-item">
             <a href="{{route('users.index')}}"> <i class="material-icons">group</i>Users </a>
         </li>
         <li class="sidebar-menu-item">

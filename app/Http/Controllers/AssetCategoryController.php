@@ -61,31 +61,43 @@ class AssetCategoryController extends Controller
     public function show(AssetCategory $assetcategory)
     {
         return view('assetcategories.show')->with([
-            'assetcategories'=>$data
+            'assetcategory'=>$assetcategory
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(assetcategory $assetcategory)
     {
-        //
+        return view("assetcategories.edit")->with([
+            'assetcategory'=>$assetcategory
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, assetcategory $assetcategory)
     {
-        //
+        $updates = $request->all();
+
+        $assetcategory->update($updates);
+
+        session()->flash('success-status',"Update successful");
+
+        return redirect()->to("assetcategories");
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(assetcategory $assetcategory)
     {
-        //
+        $assetcategory->delete();
+        session()->flash('success-status',"Category successfully deleted");
+
+        return back();
     }
 }

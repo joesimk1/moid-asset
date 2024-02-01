@@ -57,7 +57,7 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(department $department)
     {
         return view('departments.show')->with([
             'department'=>$department
@@ -67,24 +67,36 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(department $department)
     {
-        //
+        return view("departments.edit")->with([
+            'department'=>$department
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, department $department)
     {
-        //
+        $updates = $request->all();
+
+        $department->update($updates);
+
+        session()->flash('success-status',"Update successful");
+
+        return redirect()->to("departments");
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(department $department)
     {
-        //
+        $department->delete();
+        session()->flash('success-status',"Department successfully deleted");
+
+        return back();
     }
 }
