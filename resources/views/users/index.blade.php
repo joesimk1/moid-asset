@@ -8,7 +8,7 @@
 					</div>
           <div class="my-4">
             @if(session()->has('success-status'))
-              <div class="card bg-success">
+              <div class="card bg-success text-white">
                 <div class="card-body">
                   {{session('success-status')}}
                 </div>
@@ -122,3 +122,4 @@
 				</div>
 
 @endsection
+

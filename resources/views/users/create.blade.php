@@ -1,132 +1,125 @@
 @extends("layout")
 
-@section("page-content")
+
+@section('page-content')
 <div class="px-4 pt-4">
-                    <div>
-                        <h3>Users</h3>
-                    </div>
-                    <div class="my-4">
-                        @if(session()->has('success-status'))
-                        <div class="card bg-success">
-                            <div class="card-body text-white">
-                            {{session('success-status')}}
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a
-                                class="nav-link "
-                                id="view-tab"
-                                href={{ url('institutions') }}
-                                aria-controls="view-tab-pane"
-                                aria-selected="true">
-                                View
-                            </a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button
-                                class="nav-link active"
-                                id="new-tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#new-tab-pane"
-                                type="button"
-                                role="tab"
-                                aria-controls="new-tab-pane"
-                                aria-selected="false">
-                                New
-                            </button>
-                        </li>
-                    </ul>
-                    <div class="tab-content mt-2">
-                        <div class="tab-pane  active" id="new-tab-pane" role="tabpanel">
-                           <div class="row">
-                            <div class="col-sm-12 col-md-6">
-
-                                <form class="mt-8" action="{{ route('users.store')}}" method="POST">
-                                    @csrf
-                                    <div class="row mb-3 ">
-                                        <label class="col-sm-2 col-form-label">Firstname</label>
-                                        <div class="col-sm-10 has-validation">
-                                            <input type="text"
-                                                   name="fname"
-                                                   value="{{ old('fname')}}"
-                                                   class="form-control @error('fname') is-invalid @enderror">
-                                                   @error('fname')
-                                                   <div class="invalid-feedback">
-                                                     {{$message}}
-                                                    </div>
-                                                  @enderror
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3 ">
-                                        <label class="col-sm-2 col-form-label">Surname</label>
-                                        <div class="col-sm-10 has-validation">
-                                            <input type="text"
-                                                   name="sname"
-                                                   value="{{ old('sname')}}"
-                                                   class= "form-control @error('sname') is-invalid @enderror">
-                                                   @error('sname')
-                                                   <div class="invalid-feedback">
-                                                     {{$message}}
-                                                    </div>
-                                                  @enderror
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3 ">
-                                        <label class="col-sm-2 col-form-label">Email</label>
-                                        <div class="col-sm-10 has-validation">
-                                            <input type="email"
-                                                   name="email"
-                                                   value="{{ old('email')}}"
-                                                   class="form-control @error('email') is-invalid @enderror">
-                                                   @error('email')
-                                                   <div class="invalid-feedback">
-                                                     {{$message}}
-                                                    </div>
-                                                  @enderror
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3 ">
-                                        <label class="col-sm-2 col-form-label">Password</label>
-                                        <div class="col-sm-10 has-validation">
-                                            <input type="password"
-                                                   name="password"
-                                                   value=""
-                                                   class="form-control @error('password') is-invalid @enderror">
-                                                   @error('password')
-                                                   <div class="invalid-feedback">
-                                                     {{$message}}
-                                                    </div>
-                                                  @enderror
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row mb-3 ">
-                                        <label class="col-sm-2 col-form-label">Role</label>
-                                        <div class="col-sm-10 has-validation">
-                                           <select name="" class="form-select">
-                                             <option value="">-- Select Role --</option>
-                                             <option value="admin">Administrator</option>
-                                             <option value="instadmin">Institution Admin</option>
-                                             <option value="deptadmin">Department Admin</option>
-                                           </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <label htmlFor="inputEmail3" class="col-sm-2 col-form-label"></label>
-                                        <div class="col-sm-10">
-                                            <button class="btn btn-primary" type="submit">
-                                            <span>Save</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                           </div>
-                        </div>
-                    </div>
+					<div>
+						<h3>Users</h3>
+					</div>
+          <div class="my-4">
+            @if(session()->has('success-status'))
+              <div class="card bg-success text-white">
+                <div class="card-body">
+                  {{session('success-status')}}
                 </div>
-@stop
+              </div>
+            @endif
+          </div>
+					<ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+							<button
+								class="nav-link active"
+								id="view-tab"
+								data-bs-toggle="tab"
+								data-bs-target="#view-tab-pane"
+								type="button"
+								role="tab"
+								aria-controls="view-tab-pane"
+								aria-selected="false">
+								View
+							</button>
+						</li>
+						<li class="nav-item" role="presentation">
+							<a
+								class="nav-link "
+								id="view-tab"
+								href="{{ url('users/create')}}"
+								role="tab"
+								aria-controls="view-tab-pane"
+								aria-selected="true">
+								New
+              </a>
+						</li>
+
+					</ul>
+					<div class="tab-content mt-2">
+						<div class="tab-pane fade show active" id="view-tab-pane" role="tabpanel" >
+							<table class="table my-4">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Firstname</th>
+                                    <th scope="col">Surname</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach($users as $user)
+                                  <tr>
+                                    <th scope="row">{{$user->id}}</th>
+                                    <td>{{$user->fname}}</td>
+                                    <td>{{$user->sname}}</td>
+                                    <td>{{$user->email}}</td>
+                                    <td>{{$user->role}}</td>
+                                    <td class="d-flex">
+                                        <a href="{{ url('users/'.$user->id)}}"
+                                          class="btn btn-success">
+                                          View
+                                        </a>
+
+                                        <a href="{{ url('users/'.$user->id.'/edit')}}"
+                                          class="btn btn-primary">
+                                          Edit
+                                        </a>
+
+                                        <!-- trigger delete modal button -->
+                                        <button type="button" class="btn btn-danger"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modal-{{$user->id}}">
+                                          Delete
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="modal-{{$user->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Deletion</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body">
+                                                <h2>Delete {{$user->name}}</h2>
+                                               <p class="mt-2">
+                                               Are you sure you want to delete this user?
+                                               </p>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <form action="{{ url('users/'.$user->id) }}" method="POST">
+                                                  @csrf
+                                                  <input type="hidden" name="_method" value="DELETE">
+                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                  <button type="submit" class="btn btn-primary">
+                                                    Yes, Delete
+                                                  </button>
+                                                </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                    </td>
+                                  </tr>
+                                  @endforeach
+
+
+                                </tbody>
+                              </table>
+						</div>
+
+					</div>
+				</div>
+
+@endsection
+

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\user;
+use App\Models\Department;
+use App\Models\Institution;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -22,7 +24,19 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $departments = [];
+
+
+        // if the user is institution admin, they may need the departments
+        // so load them up
+        if(\request()->user()->role === "instadmin"){
+            $departments = Department::where('institution_id',\request()->user()->institution_id)->get();
+        }
+
+        return view("users.create")->with([
+            'institutions' => Institution::all(),
+            'departments'=>$departments
+        ]);
     }
 
     /**
@@ -31,62 +45,93 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'fname'=>"required|string",
-            'sname'=>"required|string",
-            'password'=>"required|string",
-            'email'=>"required|string|unique:users,email",
-            'role'=>"required|string",
-
+            'fname' => "required|string",
+            'sname' => "required|string",
+            'password' => "required|string",
+            'email' => "required|email|unique:users,email",
+            'role' => "required|string",
+            'institution_id' => "required_if:role,instadmin",
+            'department_id' => "required_if:role,deptadmin",
         ];
 
-        $this->validate($request,$rules);
-        $data = $request->all();
-// hash the password
+        $this->validate($request, $rules);
 
+        // retrieve user
+        $data = $request->all();
+
+        // hash the password
         $data['password'] = bcrypt($data['password']);
 
-        //save the user
-
+        // save the user
         User::create($data);
 
-        //set success message
-
         // set a success message
-        session()->flash('success-status',"User created successfully!");
+        session()->flash('success-status', "User created successfully!");
 
         return redirect()->route("users.index");
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(user $user)
+    public function show(User $user)
     {
-        //
+        return view('users.show')->with([
+            'user' => $user
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(user $user)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit')->with([
+            'user' => $user,
+            'institutions'=>Institution::all()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, user $user)
+    public function update(Request $request, User $user)
     {
-        //
+        $updates = collect($request->post())->except(['password'])->toArray();
+
+
+        $rules = [
+            'fname' => "required|string",
+            'sname' => "required|string",
+            'password' => "nullable|string",
+            'email' => "required|email|unique:users,email,{$user->id}",
+            'role' => "required|string",
+            'institution_id' => "required_if:role,instadmin"
+        ];
+
+        $this->validate($request, $rules);
+
+
+        if ($request->post('password')) {
+            $updates['password'] = bcrypt($request->post('password'));
+        }
+
+        $user->update($updates);
+
+        // set a success message
+        session()->flash('success-status', "User updated successfully!");
+
+        return redirect()->route("users.index");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(user $user)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        session()->flash('success-status', "User successfully deleted");
+        return redirect()->route("users.index");
     }
 }
