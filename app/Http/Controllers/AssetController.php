@@ -32,7 +32,6 @@ class AssetController extends Controller
     {
         $rules = [
             'name'=>"required",
-            'creation_date'=>"required",
             'depreciation_method'=>"required",
             'useful_life'=>"required",
             'department_id'=>"required",

@@ -49,7 +49,7 @@
                                   <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">creation date</th>
+                                    {{-- <th scope="col">creation date</th> --}}
                                     <th scope="col">depreciation method</th>
                                     <th scope="col">useful life</th>
                                     <th scope="col">department id</th>
@@ -65,7 +65,7 @@
                                   <tr>
                                     <th scope="row">{{$asset->id}}</th>
                                     <td>{{$asset->name}}</td>
-                                    <td>{{$asset->creation_date}}</td>
+                                    {{-- <td>{{$asset->creation_date}}</td> --}}
                                     <td>{{$asset->depreciation_method}}</td>
                                     <td>{{$asset->useful_life}}</td>
                                     <td>{{$asset->department_id}}</td>
