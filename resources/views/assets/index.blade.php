@@ -49,14 +49,17 @@
                                   <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
-                                    {{-- <th scope="col">creation date</th> --}}
-                                    <th scope="col">depreciation method</th>
+                                    <th scope="col">code</th>
+                                    <th scope="col">d method</th>
                                     <th scope="col">useful life</th>
                                     <th scope="col">department id</th>
-                                    <th scope="col">asset category id</th>
-                                    <th scope="col">asset user id</th>
-                                    <th scope="col">acquisition date</th>
+                                    <th scope="col">cat id</th>
+                                    <th scope="col">user id</th>
+                                    <th scope="col">acq date</th>
                                     <th scope="col">description</th>
+                                    <th scope="col">rate</th>
+                                    <th scope="col">value</th>
+
                                     <th scope="col"></th>
                                   </tr>
                                 </thead>
@@ -65,7 +68,7 @@
                                   <tr>
                                     <th scope="row">{{$asset->id}}</th>
                                     <td>{{$asset->name}}</td>
-                                    {{-- <td>{{$asset->creation_date}}</td> --}}
+                                    <td>{{$asset->code}}</td>
                                     <td>{{$asset->depreciation_method}}</td>
                                     <td>{{$asset->useful_life}}</td>
                                     <td>{{$asset->department_id}}</td>
@@ -73,6 +76,9 @@
                                     <td>{{$asset->asset_user_id}}</td>
                                     <td>{{$asset->acq_date}}</td>
                                     <td>{{$asset->description}}</td>
+                                    <td>{{$asset->depreciation_rate}}</td>
+                                    <td>{{$asset->value}}</td>
+
                                     <td class="d-flex">
                                         <a href="{{ url('assets/'.$asset->id)}}"
                                           class="btn btn-success">
