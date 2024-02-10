@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use  \App\Models\Asset;
+use App\Models\Asset;
+use App\Models\Category;
+use App\Models\Department;
+use Illuminate\Validation\Rule;
+
 
 class AssetController extends Controller
 {
