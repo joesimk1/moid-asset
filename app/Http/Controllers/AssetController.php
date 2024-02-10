@@ -22,7 +22,11 @@ class AssetController extends Controller
      */
     public function create()
     {
-        return view('assets.create');
+        $categories = Category::where('institution_id', \request()->user()->institution_id)->get();
+        return view("assets.create")->with([
+            'department_id' => \request()->user()->department_id,
+            'categories' => $categories
+        ]);
     }
 
     /**
