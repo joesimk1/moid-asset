@@ -9,9 +9,9 @@ class Asset extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name','code','depreciation_method','useful_life',
-        'department_id','asset_category_id','user_id','acq_date',
-        'description', 'depreciation_rate', 'value'
+        'name', 'code', 'description', 'acquisition_date',
+        'useful_life', 'department_id', 'category_id', 'user_id',
+        'depreciation_method', 'depreciation_rate', 'value'
     ];
 
 }

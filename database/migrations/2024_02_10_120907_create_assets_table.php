@@ -14,13 +14,16 @@ return new class extends Migration
         Schema::create('assets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('depreciation_method',['straight_line','decline_balance']);
+            $table->string('code');
+            $table->text('description');
+            $table->date('acquisition_date');
             $table->integer('useful_life');
-            $table->foreignId('department_id')->constrained();
-            $table->foreignId('asset_category_id')->constrained();
-            $table->foreignId('user_id')->constrained();
-            $table->string('acq_date');
-            $table->string('description');
+            $table->double('value');
+            $table->double('depreciation_rate')->default(0);
+            $table->unsignedBigInteger('department_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('category_id');
+            $table->string('depreciation_method');
             $table->timestamps();
         });
     }
