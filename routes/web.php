@@ -13,7 +13,7 @@ use \App\Http\Controllers\DepartmentController;
 
 
 // Redirect to login if the user visits /
-Route::get("/",function(){
+Route::get("/", function () {
     return redirect()->to("login");
 });
 
