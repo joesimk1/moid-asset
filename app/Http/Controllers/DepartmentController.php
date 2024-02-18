@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  \App\Models\Department;
+use App\Models\Institution;
+use App\Models\User;
 
 class DepartmentController extends Controller
 {
@@ -12,10 +14,16 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $data = Department::all();
+        $user = request()->user();
 
-        return view('departments.index')->with([
-            'departments'=>$data
+        $institution_id = $user->institution_id;
+
+        $data = Department::where([
+            'institution_id'=>$institution_id
+        ])->get();
+
+        return view("departments.index")->with([
+            'departments' => $data
         ]);
     }
 
@@ -24,8 +32,12 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('departments.create');
+        return view("departments.create")->with([
+            'institution_id' => \request()->user()->institution_id
+        ]);
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -33,9 +45,9 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name'=>"required",
-            'inst_id'=>"required",
-            'description'=>"required",
+            'name' => "required|string",
+            'institution_id' => "required|numeric"
+
 
         ];
 
@@ -79,13 +91,20 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, department $department)
     {
-        $updates = $request->all();
+        $rules = [
+            'name' => "required|string",
+            'institution_id' => "required|numeric"
+        ];
+
+        $this->validate($request, $rules);
+
+        $updates = $request->post();
 
         $department->update($updates);
 
-        session()->flash('success-status',"Update successful");
+        session()->flash('success-status', "Department updated successfully!");
 
-        return redirect()->to("departments");
+        return redirect()->route("departments.index");
 
     }
 

@@ -36,7 +36,7 @@
                                     <div class="card-body">
                                         <h4>System Usage</h4>
                                         <div class="mt-4">
-
+                                            <div id="chart"></div>
                                             <Chart options={chartConfig.options} series={chartConfig.series} type="area"
                                                    height={350}/>
                                         </div>
@@ -62,3 +62,6 @@
                 </div>
             </div>
             @stop
+
+            <script src="{{ asset('vendor/apexcharts/dist/apexcharts.min.js')}}"></script>
+
